@@ -1,0 +1,335 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+/*--web--*/
+*{margin:0; padding:0; list-style:none; text-decoration:none; }
+img{vertical-align:top; border:none; cursor:pointer;}
+.clearfix:after{ content:''; display:block; clear:both;}
+.fl{float:left; }
+.fr{float:right; }
+input,textarea{border:none; background:none; online:none; }
+textarea{resize:none; }
+
+/*--head--*/
+.web-bk{width:100%; height:1010px; background:url(img/2.jpg) no-repeat 0 center; background-size:100%; opacity:.9; position:relative; }
+.web-zj{width:100%; height:30px; position:fixed; left:1000px; top:20px; z-index:9999;}
+.web-zj li{width:100px; height:30px; float:left; }
+.web-zj li a{width:100%; height:100%; font-size:18px; color:yellow; text-align:center; line-height:30px; display:block; font-family:'微软雅黑';}
+.web-zj li a:hover{color:#fff; border-radius:4px; font-weight:bold; }
+
+/*--时钟--*/
+.web-bk .web-kg{overflow:hidden; height:35px; margin-left:100px; padding-top:20px; }
+.web-bk .web-kg li{float:left; width:24px; height:35px; overflow: hidden; position:relative; }
+.web-bk .web-kg .kg{margin-right:5px; }
+.web-bk .web-kg li img{ position:absolute; top:0; left:0;}
+
+/*--作品--*/
+#opus{width:100%; height:320px; position:absolute; left:0; top:150px;  text-align:center; z-index:1; opacity:1;}
+#opus a{ width:80px; height:40px; text-align:center; line-height:40px; background:-webkit-linear-gradient(#999,#ccc); font-size:15px; font-family:微软雅黑; font-weight:bold; color:#fff; box-shadow:0 10px 5px #000, inset 0 0 10px #fff; text-shadow:2px 2px 5px #000; -webkit-transition:.3s all ease; border-radius:10px;}
+#opus .prev{ position:absolute; left:50%; margin-left:-200px;}
+#opus .next{ position:absolute; left:50%; margin-left:100px;}
+#opus a:hover{box-shadow:0 10px 5px #000, inset 0 0 30px #fff;}
+
+#opus .box{width:200px; height:200px; margin:100px auto; position:relative; -webkit-transform-style:preserve-3d;}
+#opus .box li{position:absolute; top:0; left:0; width:100%; height:100%; text-align:center; line-height:200px; background:#399; opacity:0; font-size:30px; border:1px solid #000; -webkit-transition:1s all ease; cursor:pointer;}
+#opus .box .l2{opacity:0; -webkit-transform: perspective(800px) translate(-260px,0) rotateY(60deg);}
+#opus .box .l1{opacity:0.75; -webkit-transform: perspective(800px) translate(-200px,0) rotateY(60deg);}
+#opus .box .cur{opacity:1;}
+#opus .box img{ width:200px; height:200px; background-size:100%;}
+#opus .box .r1{opacity:0.75; -webkit-transform: perspective(800px) translate(200px,0) rotateY(-60deg);}
+#opus .box .r2{opacity:0; -webkit-transform: perspective(800px) translate(260px,0) rotateY(-60deg);}
+
+/*--me--*/
+.web-cjg{width:100%; height:300px; position:absolute; left:0; top:570px; opacity:1; z-index:1;}
+.web-cjg .cjg{text-align:center; }
+/*--选项卡--*/
+.web-cjg{height:300px; }
+.web-cjg input{width:200px; height:40px; font-size:20px; color:#FC0; cursor:pointer; margin:10px 0;}
+.cjg div{width:660px; height:100%; margin:0 auto; display:none; }
+.web-cjg .show{width:660px; height:100%; margin:0 auto; display:block; }
+/*--第一个--*/
+.web-cjg li{margin-top:20px; width:155px; height:180px; float:left; background:#999; margin-right:10px; }
+.web-cjg img{padding-top:30px; }
+.web-cjg li p{color:#FFF; font-size:16px; line-height:20px; }
+/*--第二个--*/
+.zy-tu{width:660px; height:100%; background:#333;}
+.zy-tu h4{font-size:20px; line-height:34px; cursor:pointer; }
+.web-cjg .zy-tu p{font-size:14px; line-height:20px; color:#fff; }
+/*--第三个--*/
+.web-cjg .cjg .me{width:660px; height:100%; background:#999; }
+.web-cjg .cjg .me li{font-size:16px; line-height:30px; color:#fff; font-family:'微软雅黑';}
+
+/*--about--*/
+.web-about{width:100%; height:300px; background:url(img/4.jpg) no-repeat 0 center; background-size:100%; }
+.web-rn{position:relative; width:100%; height:100%; }
+.web-rn img{position:absolute; left:1000px; top:80px; width:200px; height:200px; border:5px solid #9FF; border-radius:60%; }
+.web-rn .dialog{width:550px; height:200px; position:absolute; left:350px; top:50px; border:5px solid #CFF; border-radius:20px; position:relative; }
+.web-rn .dialog h3{ line-height:40px; font-size:20px; color:#fff; opacity:0.3; padding:20px 0 0 50px; }
+.web-rn .dialog span{width:0; height:0; border-top:30px solid transparent; border-left:50px solid #CFF;border-bottom:10px solid transparent; position:absolute; left:550px; top:80px; }
+
+/*--last--*/
+.last{position:absolute; left:1250px; top:240px; }
+.last a{display:block; width:80px; height:40px; border:2px solid #CFF; border-radius:10px; text-align:center; line-height:40px; font-weight:bold; font-family:'微软雅黑'; color:#CFF; }
+.last a:hover{border:2px solid #fff; color:#fff; }
+</style>
+<script src="script/move7.js"></script>
+<script>
+	window.onload=function(){
+		/*--时钟--*/
+		var aImg = document.getElementById('web-bk').getElementsByTagName('img');
+		//补零函数  1->01 9 09 10
+		function toDou(n){
+				return n<10?'0'+n:''+n;
+		}	
+		function time(){
+			var oDate = new Date();
+			var h = oDate.getHours();
+			var m = oDate.getMinutes();
+			var s = oDate.getSeconds();
+			var str =  toDou(h)+toDou(m)+toDou(s);
+			for(var i = 0;i<str.length;i++){
+				//aImg[i].style.top = -str.charAt(i)*35+'px';
+				move(aImg[i],{top:-str.charAt(i)*35},{'easing':'linear','duration':300});
+			}
+		}
+		time();
+		setInterval(time,1000);
+		
+		/*--作品--*/
+		var oPrev = document.querySelector('.prev');
+		var oNext = document.querySelector('.next');
+		var oBox = document.querySelector('.box');
+		var aLi = oBox.children;
+		
+		var aClass = [];
+		for(var i=0;i<aLi.length;i++){
+			aClass[i] = aLi[i].className;
+			
+		}
+		//alert(aClass);
+		var bOk = false;
+		oNext.onclick=function(){
+			if(bOk)return;
+			bOk = true;
+			aClass.unshift(aClass.pop());
+			tab();
+		};
+		oPrev.onclick=function(){
+			if(bOk)return;
+			bOk = true;
+			aClass.push(aClass.shift());
+			tab();
+		};
+		function tab(){
+			for(var i=0;i<aLi.length;i++){
+				aLi[i].className=aClass[i];
+			}
+			var oCur = document.querySelector('.cur');
+			
+			function tranEnd(){
+				oCur.addEventListener('transitionend',tranEnd,false);
+				bOk = false;
+			}
+			oCur.addEventListener('transitionend',tranEnd,false);
+		}
+		for(var i=0;i<aLi.length;i++){
+			aLi[0].onclick=function(){
+				window.open('text/css3简易时钟.html');		
+			};
+			aLi[1].onclick=function(){
+				window.open('text/穿墙效果.html');		
+			};
+			aLi[2].onclick=function(){
+				window.open('text/css3-3D图片环.html');		
+			};
+			aLi[3].onclick=function(){
+				window.open('text/灵魂回响/灵魂回响.html');		
+			};
+			aLi[4].onclick=function(){
+				window.open('text/网站分页效果.html');		
+			};	
+			aLi[5].onclick=function(){
+				window.open('text/css3-爆炸效果.html');		
+			};	
+		}
+	
+	/*--选项卡--*/
+		var aInt=document.getElementsByTagName('input');
+		var aDiv=document.getElementById('cjg').getElementsByTagName('div');
+		for(var i=0;i<aInt.length;i++){
+			aInt[i].index=i;
+			aInt[i].onclick=function(){
+				for(var i=0;i<aInt.length;i++){
+					aInt[i].className='';
+					aDiv[i].className='';
+				}
+				this.className='cur';
+				aDiv[this.index].className='show';	
+			}
+		}	
+	};
+</script>
+</head>
+	<section class="web">
+    	<!--head-->
+        <section class="web-bk" id="web-bk">
+            <ul class="web-kg">
+                <li><img src="img/num.png" /></li>
+                <li class="kg"><img src="img/num.png" /></li>
+                <li><img src="img/num.png" /></li>
+                <li class="kg"><img src="img/num.png" /></li>
+                <li><img src="img/num.png" /></li>
+                <li><img src="img/num.png" /></li>
+            </ul>
+        </section>
+        <!--作品-->
+        <section>
+        	<div id="opus">
+            	<h2 id="one"></h2>
+                <a href="javascript:;" class="prev">上一个</a>
+                <a href="javascript:;" class="next">下一个</a>
+                <ul class="box">
+                    <li class="cur">
+                        <img src="img/clock.png" style="width:200px; height:200px;"/>
+                    </li>
+                    <li class="r1">
+                        <img src="img/wear.png" style="width:200px; height:200px;"/>
+                    </li>
+                    <li class="r2">
+                        <img src="img/surround.png" style="width:200px; height:200px;"/>
+                    </li>
+                    <li>
+                        <img src="img/webpage.png" style="width:200px; height:200px;"/>
+                    </li>
+                    <li class="l2">
+                        <img src="img/paging.png" style="width:200px; height:200px;"/>
+                    </li>
+                    <li class="l1">
+                        <img src="img/blast.png" style="width:200px; height:200px;"/>
+                    </li>
+                </ul>
+            </div> 
+        </section>
+        <!--me-->
+        <section class="web-cjg">
+        	<h2 id="two"></h2>
+        	<div class="cjg" id="cjg">
+            	<input type="button" value="关于我" class="cur"/>
+                <input type="button" value="个人技能"/ class="qidong">
+                <input type="button" value="我的经历"/>
+                <div class="show">
+                	<ul class="clearfix">
+                    	<li>
+                        	<img src="img/y1.png"/>
+                            <p>我的学历<br/>统招专科</p>
+                        </li>
+                        <li>
+                        	<img src="img/y2.png"/>
+                            <p>我的年龄<br/>二十三岁</p>
+                        </li>
+                        <li>
+                        	<img src="img/y3.png"/>
+                            <p>暂时住地<br/>北京朝阳</p>
+                        </li>
+                        <li>
+                        	<img src="img/y4.png"/>
+                            <p>我的状态<br/>离职待业</p>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                	<section class='zy-tu'>
+                        <ul>
+                            <li>
+                            	<h4>photoshop</h4>
+                                <p>
+                                    熟练掌握ps的使用<br/>
+                                    熟悉各种切图、尺寸规范能独立制作完整的页面及优秀的海报图<br/>
+                                    有较好的审美观念及色彩搭配感
+                                </p>
+                                <!--<div class='tu_ps'>
+                                    <div><span id='ps'>90</span>%</div>
+                                </div>-->
+                            </li>
+                            <li>
+                            	<h4>javascript</h4>
+                                <p>
+                                	掌握jQuery库<br/>
+                                    掌握ajax的运作原理及json数据结构<br/>
+                                    注重JavaScript性能优化正在不断学习原生JavaScript，了解js闭包等
+                                </p>
+                                <!--<div class='tu_js'>
+                                    <div><span id='js'>70</span>%</div>
+                                </div>-->
+                            </li>
+                            <li>
+                            	<h4>html</h4>
+                                <p>
+                                	深刻理解Web标准<br/>
+                                    熟练运用html标签<br/>
+                                    熟悉html标签语言<br/>
+                                    可以用html5做一些小效果
+                                </p>
+                               <!-- <div class='tu_hl'>
+                                    <div><span id='hl'>90</span>%</div>
+                                </div>-->
+                            </li>
+                            <li>
+                            	<h4>css</h4>
+                                <p>
+                                	熟练运用css及css3新属性<br/>
+                                    注重浏览器兼容性，熟悉常见的css hack（兼容至IE8）<br/>
+                                    可以用css3做一些小效果
+                                </p>
+                                <!--<div class='tu_css'>
+                                    <div><span id='css'>90</span>%</div>
+                                </div>-->
+                            </li>
+                        </ul>	
+					</section>
+                </div>
+                <div>
+                	<section class="me">
+                        <ul>
+                            <li>2014年毕业于江苏农林技术学院，计算机科学与技术，在校期间就对前端网页的动态效果着迷，开始自学。</li>
+							<li>毕业后，开始在工作之余钻研web前端技术，日新月异的前沿技术和自由的框架即让我头疼又让我兴奋。</li>
+                       		<li>后来在智能社学习。从此----世界向我敞开新的大门！！！</li>
+                        	<li>2014年11月在上海莫凡科技有限公司做前端，主要负责网页切图，加一些JS代码，实现页面的动态效果...至今。</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </section>
+        <!--about-->
+        <section class="web-about">
+        	<h3 id="three"></h3>
+            <div class="web-rn">
+                <a href="javascript:;"><img src="img/zj.png"></a>
+                <div class="dialog">
+                	<h3>
+                    	联系方式：<br/>
+                        iphone:15026569006<br/>
+                        Email:caojg062813@sina.com
+					</h3>
+                	<span></span>
+                </div>
+                <div class="last">
+                    <a href="#">返回顶部</a>
+                </div>
+            </div>
+        </section>
+        <section>
+            <ul class="web-zj clearfix">
+                <li><a href="#one" >我的作品</a></li>
+                <li><a href="#two" >关于我</a></li>
+                <li><a href="#three">联系我</a></li>
+            </ul>
+        </section>
+        
+    </section>
+<body>
+</body>
+</html>

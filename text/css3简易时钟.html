@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+*{margin:0; padding:0;}
+body{background:#000; }
+.box{width:300px; height:300px; position:absolute; left:50%; top:50%; border:1px dashed #00C; margin-left:-150px; margin-top:-150px; border-radius:50%;  background:#000; box-shadow:0 0 0 #000; -webkit-transition:1s all ease;}
+.box:hover{background:#fff; box-shadow: 0 0 150px #fff;}
+.box .hou{width:8px; height:80px; background:red; border-radius:50% 50% 0 0; position:absolute; left:50%; top:70px; margin-left:-4px; -webkit-transform-origin:center bottom;}
+.box .min{width:6px; height:90px; background:yellow; border-radius:50% 50% 0 0;position:absolute; left:50%; top:60px; margin-left:-3px; -webkit-transform-origin:center bottom;}
+.box .sec{width:4px; height:100px; background:aqua; border-radius:50% 50% 0 0;position:absolute; left:50%; top:50px; margin-left:-2px;  -webkit-transform-origin:center bottom;}
+.box .dian{width:4px; height:6px; background:#0F3; position:absolute; left:50%; top:0; margin-left:-2px; -webkit-transform-origin:center 150px; border-radius: 0 0 50% 50%;}
+.box .d_dian{width:6px; height:10px; background:#F03; position:absolute; left:50%; top:0; margin-left:-3px; -webkit-transform-origin:center 150px; border-radius: 0 0 50% 50%;}
+.box .cap{width:8px; height:10px; background:pink; border-radius:50%; position:absolute; left:50%; top:145px; margin-left:-4px; }
+.box .d_dian em{width:20px; height:20px; position:absolute; left:50%; top:10px; margin-left:-10px; text-align:center; font-style:normal; color:#30C; font-weight:bold;}
+</style>
+<script>
+	window.onload=function(){
+		var oB=document.querySelector('.box');
+		var oH=document.querySelector('.hou');
+		var oM=document.querySelector('.min');
+		var oS=document.querySelector('.sec');
+		var n=60;
+		for(var i=0;i<n;i++){
+			var oSp=document.createElement('span');
+			if(i%5==0){
+				oSp.className='d_dian';	
+				var num=(i/5)||12;
+				oSp.innerHTML='<em>'+num+'</em>';
+				var oEm=oSp.children[0];
+				oEm.style.WebkitTransform='rotate(-'+i*6+'deg)';
+			}else{
+				oSp.className='dian';
+			};
+			oSp.style.transform='rotate('+i*6+'deg)';
+			oB.appendChild(oSp);	
+		};
+		
+		function time(){
+			var oDate=new Date();
+			var h=oDate.getHours();
+			var m=oDate.getMinutes();
+			var s=oDate.getSeconds();
+			var ms=oDate.getMilliseconds();
+			console.log(ms);
+			
+			
+			oH.style.WebkitTransform='rotate('+(h*30+m/60*30)+'deg)';
+			oM.style.WebkitTransform='rotate('+(m*6+s/60*6)+'deg)';
+			oS.style.WebkitTransform='rotate('+(s*6+ms/1000*6)+'deg)';
+		};
+		time();
+		setInterval(time,1);	
+	};
+</script>
+</head>
+
+<body>
+	<div class="box">
+    	<div class="hou"></div>
+        <div class="min"></div>
+        <div class="sec"></div>
+        <span class="dian"></span>
+        <div class="cap"></div>
+    </div>
+</body>
+</html>
